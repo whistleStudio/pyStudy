@@ -11,6 +11,30 @@ def fun():
 
 '''
 用js解释整个过程
+函数同样是对象，有一个隐藏属性[[scope]](作用域)，其中储存了函数在创建与执行调用时的上下文集合，且呈链式分布.
+每次新的声明定义都会开辟新的内存空间
+查找变量原则：从作用域链的顶端依次向下查找
+
+1) fun定义时，
+   fun[[scope]] = {
+       0: [globals]
+   }
+2）fun执行时，
+    fun[[scope]] = {
+        0: [n, a, s, inner_fun],    # 执行完成时，0项被销毁
+        1：[globals]
+    }
+3) inner_fun定义时，
+    inner_fun = {
+        0: [n, a, s, inner_fun],
+        1: [globals]
+    }
+4) inner_fun执行时，
+    inner_fun = {
+        0: [b],     # 执行完成时，0项被销毁
+        1: [n, a, s, inner_fun],
+        2: [globals]
+    }
 
 '''
 def fun(n):
